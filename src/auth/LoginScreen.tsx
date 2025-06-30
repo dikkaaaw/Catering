@@ -12,7 +12,7 @@ type RootStackParamList = {
   Login: undefined;
   Tabs: undefined;
   Register: undefined;
-  ForgotPassword: undefined;
+  EnterEmail: undefined;
 };
 
 const LoginScreen = () => {
@@ -38,7 +38,7 @@ const LoginScreen = () => {
   };
 
   const handleForgotPassword = () => {
-    navigation.navigate('ForgotPassword');
+    navigation.navigate('EnterEmail');
   };
 
   return (
@@ -57,7 +57,7 @@ const LoginScreen = () => {
             </Text>
           </View>
 
-          <Text className="max-w-80 text-center font-sf-regular text-[18px] leading-tight tracking-wider text-secondary">
+          <Text className="max-w-80 text-center text-body">
             Enter your Phone number or Email for sign in, Or{' '}
             <Text onPress={handleRegister} className="text-primary underline">
               Create new account.
@@ -69,9 +69,11 @@ const LoginScreen = () => {
         <View className="mt-10 flex flex-col gap-6">
           <View className="relative">
             <TextInput
-              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 font-sf-regular text-[18px] text-secondary"
+              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 text-body"
               style={{ height: 56 }}
-              placeholder="Phone number or Email"
+              placeholder="example@gmail.com"
+              inputMode="email"
+              keyboardType="email-address"
               returnKeyType="next"
               autoCapitalize="none"
               autoComplete="email"
@@ -97,9 +99,9 @@ const LoginScreen = () => {
           </View>
           <View className="relative">
             <TextInput
-              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 font-sf-regular text-[18px] text-secondary"
+              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 text-body"
               style={{ height: 56 }}
-              placeholder="Password"
+              placeholder="password"
               returnKeyType="done"
               secureTextEntry={!showPassword}
             />
