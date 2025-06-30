@@ -1,19 +1,20 @@
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import type { RouteProp } from '@react-navigation/native';
+import type { NavigationProp, RouteProp } from '@react-navigation/native';
 
 import Header from '@/components/common/Header';
 import Button from '@/components/common/Button';
 
 type RootStackParamList = {
   ResetPassword: { email: string };
+  Login: undefined;
 };
 
 type ResetPasswordRouteProp = RouteProp<RootStackParamList, 'ResetPassword'>;
 
 const ResetPasswordScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<ResetPasswordRouteProp>();
   const { email } = route.params;
 
@@ -22,7 +23,12 @@ const ResetPasswordScreen = () => {
   };
 
   const handlePress = () => {
-    // Logika untuk mengirim ulang email reset
+    Alert.alert('Email Sent', `A reset password email has been sent to ${email}.`, [
+      {
+        text: 'OK',
+        onPress: () => navigation.navigate('Login'),
+      },
+    ]);
   };
 
   return (
