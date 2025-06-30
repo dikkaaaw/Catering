@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Image, Text, TouchableOpacity, View, FlatList, Dimensions, ViewToken } from 'react-native';
+import { Image, Text, View, FlatList, Dimensions, ViewToken } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -62,10 +62,8 @@ const OnboardingScreen = () => {
       />
 
       <View className="flex flex-col gap-4">
-        <Text className="font-sf text-center text-[30px] font-semibold">{item.title}</Text>
-        <Text className="font-sf max-w-80 text-center text-[16px] font-light text-secondary">
-          {item.description}
-        </Text>
+        <Text className="text-headline text-center">{item.title}</Text>
+        <Text className="text-body max-w-80 text-center">{item.description}</Text>
       </View>
     </View>
   );
