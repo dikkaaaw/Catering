@@ -5,7 +5,8 @@ import useCachedResources from './hooks/useCachedResource';
 import OnboardingScreen from '~/onboarding/OnboardingScreen';
 import LoginScreen from '~/auth/LoginScreen';
 import RegisterScreen from '~/auth/RegisterScreen';
-import ForgotPasswordScreen from '~/auth/ForgotPasswordScreen';
+import EnterEmailScreen from '~/auth/forgot-password/EnterEmailScreen';
+import ResetPasswordScreen from '~/auth/forgot-password/ResetPasswordScreen';
 import TabsLayout from '~/tabs/_layout';
 import './global.css';
 
@@ -24,7 +25,8 @@ export default function App() {
           <Stack.Screen name="Onboarding" component={OnboardingScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+          <Stack.Screen name="EnterEmail" component={EnterEmailScreen} />
+          <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
           <Stack.Screen name="Tabs" component={TabsLayout} />
         </Stack.Navigator>
       </NavigationContainer>
