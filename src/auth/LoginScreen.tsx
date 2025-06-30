@@ -58,86 +58,101 @@ const LoginScreen = () => {
           </View>
 
           <Text className="max-w-80 text-center text-body">
-            Enter your Phone number or Email for sign in, Or{' '}
-            <Text onPress={handleRegister} className="text-primary underline">
-              Create new account.
-            </Text>
+            Enter your Phone number or Email address for sign in. Enjoy your food :)
           </Text>
         </View>
 
         {/* Login Form */}
-        <View className="mt-10 flex flex-col gap-6">
-          <View className="relative">
-            <TextInput
-              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 text-body"
-              style={{ height: 56 }}
-              placeholder="example@gmail.com"
-              inputMode="email"
-              keyboardType="email-address"
-              returnKeyType="next"
-              autoCapitalize="none"
-              autoComplete="email"
-              onChangeText={checkEmailValidity}
-            />
-            <View
-              style={{
-                position: 'absolute',
-                right: 16,
-                top: '50%',
-                transform: [{ translateY: -12 }],
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={isEmailValid ? icons.check : icons.phone}
-                style={{
-                  width: 24,
-                  height: 24,
-                }}
+        <View className="mt-10 flex flex-col gap-4">
+          {/* Email Input */}
+          <View className="mb-2">
+            <View className="relative">
+              <TextInput
+                className={`rounded-lg border ${isEmailValid ? 'border-[#F3F2F2]' : 'border-red-400'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                style={{ height: 52 }}
+                placeholder="example@gmail.com"
+                inputMode="email"
+                keyboardType="email-address"
+                returnKeyType="next"
+                autoCapitalize="none"
+                autoComplete="email"
+                onChangeText={checkEmailValidity}
               />
+              <View
+                style={{
+                  position: 'absolute',
+                  right: 16,
+                  top: '50%',
+                  transform: [{ translateY: -12 }],
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  source={isEmailValid ? icons.check : icons.phone}
+                  style={{
+                    width: 22,
+                    height: 22,
+                    tintColor: isEmailValid ? '#22C55E' : '#F87171',
+                  }}
+                />
+              </View>
+            </View>
+            {!isEmailValid && (
+              <Text className="ml-1 mt-1 text-xs text-red-400">
+                Please enter a valid email address.
+              </Text>
+            )}
+          </View>
+          {/* Password Input */}
+          <View>
+            <View className="relative">
+              <TextInput
+                className="rounded-lg border border-[#F3F2F2] bg-[#FBFBFB] px-5 pr-12 text-body"
+                style={{ height: 52 }}
+                placeholder="password"
+                returnKeyType="done"
+                secureTextEntry={!showPassword}
+              />
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  right: 16,
+                  top: '50%',
+                  transform: [{ translateY: -14 }],
+                }}>
+                <Image
+                  source={icons.eye}
+                  style={{
+                    width: 24,
+                    height: 24,
+                    tintColor: '#A3A3A3',
+                  }}
+                />
+              </TouchableOpacity>
             </View>
           </View>
-          <View className="relative">
-            <TextInput
-              className="rounded-md border border-[#F3F2F2] bg-[#FBFBFB] px-6 pr-12 text-body"
-              style={{ height: 56 }}
-              placeholder="password"
-              returnKeyType="done"
-              secureTextEntry={!showPassword}
-            />
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={togglePasswordVisibility}
-              style={{
-                position: 'absolute',
-                right: 16,
-                top: '50%',
-                transform: [{ translateY: -12 }],
-              }}>
-              <Image
-                source={icons.eye}
-                style={{
-                  width: 28,
-                  height: 28,
-                }}
-              />
-            </TouchableOpacity>
-          </View>
         </View>
+        <TouchableOpacity
+          className="mt-2 flex items-end"
+          activeOpacity={0.9}
+          onPress={handleForgotPassword}>
+          <Text className="!text-[16px] !text-primary underline text-body">Forgot Password?</Text>
+        </TouchableOpacity>
 
         {/* Button */}
-        <View className="mt-10 flex flex-col gap-8">
-          <TouchableOpacity activeOpacity={0.9} onPress={handleForgotPassword}>
-            <Text className="text-center font-sf-medium text-[16px] text-black">
-              Forgot Password?
+        <View className="mt-10 flex flex-col gap-6">
+          <Button title="Sign In" onPress={handleLogin} />
+
+          <TouchableOpacity activeOpacity={0.9} onPress={handleRegister}>
+            <Text className="text-center !text-[16px] text-body">
+              Don{'\u2019'}t have account?{' '}
+              <Text className="text-primary underline">Create new account.</Text>
             </Text>
           </TouchableOpacity>
 
-          <Button title="Sign In" onPress={handleLogin} />
-
-          <TouchableOpacity activeOpacity={0.9} onPress={() => {}}>
-            <Text className="text-center font-sf-medium text-[16px] text-black">Or</Text>
-          </TouchableOpacity>
+          <Text className="text-center font-sf-medium text-[18px] text-black">Or</Text>
         </View>
 
         {/* Login Options */}
