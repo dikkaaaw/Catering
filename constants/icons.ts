@@ -14,6 +14,8 @@ import google from '../assets/icons/google.png';
 import check from '../assets/icons/done.png';
 import icon from '../assets/icons/icon.png';
 import close from '../assets/icons/close.png';
+import location from '../assets/icons/location.png';
+import locationPoint from '../assets/icons/location-point.png';
 
 export default {
   home,
@@ -32,4 +34,6 @@ export default {
   check,
   icon,
   close,
+  location,
+  locationPoint,
 };
