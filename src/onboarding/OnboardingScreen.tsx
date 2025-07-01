@@ -24,7 +24,7 @@ const OnboardingScreen = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isFirstLaunch, setIsFirstLaunch] = useState(true);
   const flatListRef = useRef<FlatList>(null);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigate = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     AsyncStorage.getItem('hasSeenOnboarding').then((value) => {
@@ -48,7 +48,7 @@ const OnboardingScreen = () => {
       });
     } else {
       await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-      navigation.navigate('Login');
+      navigate.navigate('Login');
     }
   };
 
@@ -62,8 +62,8 @@ const OnboardingScreen = () => {
       />
 
       <View className="flex flex-col gap-4">
-        <Text className="text-headline text-center">{item.title}</Text>
-        <Text className="text-body max-w-80 text-center">{item.description}</Text>
+        <Text className="text-center text-headline">{item.title}</Text>
+        <Text className="max-w-80 text-center text-body">{item.description}</Text>
       </View>
     </View>
   );

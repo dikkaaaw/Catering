@@ -14,10 +14,10 @@ type RootStackParamList = {
 const EnterEmailScreen = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigate = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handleBackPress = () => {
-    navigation.goBack();
+    navigate.goBack();
   };
 
   const handlePress = () => {
@@ -34,7 +34,7 @@ const EnterEmailScreen = () => {
     }
 
     setEmailError('');
-    navigation.navigate('ResetPassword', { email: email });
+    navigate.navigate('ResetPassword', { email: email });
   };
 
   const handleEmailChange = (text: string) => {

@@ -14,19 +14,19 @@ type RootStackParamList = {
 type ResetPasswordRouteProp = RouteProp<RootStackParamList, 'ResetPassword'>;
 
 const ResetPasswordScreen = () => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<ResetPasswordRouteProp>();
+  const navigate = useNavigation<NavigationProp<RootStackParamList>>();
   const { email } = route.params;
 
   const handleBackPress = () => {
-    navigation.goBack();
+    navigate.goBack();
   };
 
   const handlePress = () => {
     Alert.alert('Email Sent', `A reset password email has been sent to ${email}.`, [
       {
         text: 'OK',
-        onPress: () => navigation.navigate('Login'),
+        onPress: () => navigate.navigate('Login'),
       },
     ]);
   };
