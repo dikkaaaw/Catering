@@ -18,10 +18,9 @@ import LoginOptions from '@/components/common/LoginOptions';
 import { useEmailValidation, usePasswordValidation } from '@/hooks/useValidation';
 
 type RootStackParamList = {
-  Login: undefined;
-  Tabs: undefined;
   Register: undefined;
   EnterEmail: undefined;
+  SelectLocation: undefined;
 };
 
 const LoginScreen = () => {
@@ -41,7 +40,7 @@ const LoginScreen = () => {
     const isPasswordValid = password.validate();
 
     if (isEmailValid && isPasswordValid) {
-      navigate.navigate('Tabs');
+      navigate.navigate('SelectLocation');
     }
   };
 
