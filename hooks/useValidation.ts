@@ -30,11 +30,11 @@ export const useValidation = (
     // Required Validation
     if (rules.required && !value.trim()) {
       if (rules.email) {
-        setError('Email is required!');
+        setError('Email is required');
       } else if (rules.fullName) {
-        setError('Fullname is required!');
+        setError('Fullname is required');
       } else {
-        setError('Password is required!');
+        setError('Password is required');
       }
       return false;
     }
