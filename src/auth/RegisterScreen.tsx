@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  Pressable,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -66,12 +67,14 @@ const RegisterScreen = () => {
         {/* Main Content */}
         <View className="px-6 pt-10">
           <Text className="mb-2 text-h1">Create Account</Text>
-          <TouchableOpacity activeOpacity={0.8} onPress={handleLogin}>
-            <Text className="mb-8 max-w-80 text-body">
-              Enter your Name, Email and Password for sign up.
-              <Text className="text-primary"> Already have account?</Text>
+          <View className="mb-8 max-w-80">
+            <Text className="text-body">
+              Enter your Name, Email and Password for sign up.{' '}
+              <Text className="text-primary" onPress={handleLogin}>
+                Already have account?
+              </Text>
             </Text>
-          </TouchableOpacity>
+          </View>
 
           {/* Register Form */}
           <View className="mb-10 mt-2 flex flex-col gap-4">
@@ -90,40 +93,18 @@ const RegisterScreen = () => {
               )}
             </View>
             <View className="mb-1">
-              <View className="relative">
-                <TextInput
-                  className={`rounded-lg border ${email.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
-                  style={{ height: 52 }}
-                  placeholder="Email Address"
-                  inputMode="email"
-                  keyboardType="email-address"
-                  returnKeyType="next"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                  value={email.value}
-                  onChangeText={email.setValue}
-                />
-                {email && (
-                  <View
-                    style={{
-                      position: 'absolute',
-                      right: 16,
-                      top: '50%',
-                      transform: [{ translateY: -12 }],
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    <Image
-                      source={!email.error ? icons.check : icons.phone}
-                      style={{
-                        width: 22,
-                        height: 22,
-                        tintColor: '#A3A3A3',
-                      }}
-                    />
-                  </View>
-                )}
-              </View>
+              <TextInput
+                className={`rounded-lg border ${email.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                style={{ height: 52 }}
+                placeholder="Email Address"
+                inputMode="email"
+                keyboardType="email-address"
+                returnKeyType="next"
+                autoCapitalize="none"
+                autoComplete="email"
+                value={email.value}
+                onChangeText={email.setValue}
+              />
               {email.error && <Text className="ml-1 mt-1 text-sm text-red-400">{email.error}</Text>}
             </View>
             <View className="mb-1">

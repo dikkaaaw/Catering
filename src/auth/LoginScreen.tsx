@@ -95,18 +95,18 @@ const LoginScreen = () => {
                   <View
                     style={{
                       position: 'absolute',
-                      right: 16,
-                      top: '50%',
+                      right: !email.error ? 16 : 20,
+                      top: !email.error ? '50%' : '65%',
                       transform: [{ translateY: -12 }],
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={!email.error ? icons.check : icons.phone}
+                      source={!email.error ? icons.phone : icons.close}
                       style={{
-                        width: 22,
-                        height: 22,
-                        tintColor: '#A3A3A3',
+                        width: !email.error ? 22 : 10,
+                        height: !email.error ? 22 : 10,
+                        tintColor: !email.error ? '#A3A3A3' : '#F87171',
                       }}
                     />
                   </View>
@@ -149,23 +149,24 @@ const LoginScreen = () => {
               )}
             </View>
           </View>
-          <TouchableOpacity
-            className="mt-2 flex items-end"
-            activeOpacity={0.9}
-            onPress={handleForgotPassword}>
-            <Text className="!text-[16px] !text-primary underline text-body">Forgot Password?</Text>
-          </TouchableOpacity>
+          <View className="flex flex-row justify-end">
+            <Text
+              onPress={handleForgotPassword}
+              className="mt-2 !text-[16px] !text-primary underline text-body">
+              Forgot Password?
+            </Text>
+          </View>
 
           {/* Button */}
           <View className="mt-10 flex flex-col gap-6">
             <Button title="Sign In" onPress={handleLogin} />
 
-            <TouchableOpacity activeOpacity={0.9} onPress={handleRegister}>
-              <Text className="text-center !text-[16px] text-body">
-                Don{'\u2019'}t have account?{' '}
-                <Text className="text-primary underline">Create new account.</Text>
+            <Text className="text-center !text-[16px] text-body">
+              Don{'\u2019'}t have account?{' '}
+              <Text className="text-primary underline" onPress={handleRegister}>
+                Create new account.
               </Text>
-            </TouchableOpacity>
+            </Text>
 
             <Text className="text-center font-sf-medium text-[18px] text-black">Or</Text>
           </View>
