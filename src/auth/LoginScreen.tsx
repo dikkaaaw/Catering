@@ -106,7 +106,7 @@ const LoginScreen = () => {
                       style={{
                         width: 22,
                         height: 22,
-                        tintColor: !email.error ? '#22C55E' : '#F87171',
+                        tintColor: '#A3A3A3',
                       }}
                     />
                   </View>
