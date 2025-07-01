@@ -16,6 +16,9 @@ import icon from '../assets/icons/icon.png';
 import close from '../assets/icons/close.png';
 import location from '../assets/icons/location.png';
 import locationPoint from '../assets/icons/location-point.png';
+import star from '../assets/icons/star.png';
+import delivery from '../assets/icons/delivery.png';
+import clock from '../assets/icons/clock.png';
 
 export default {
   home,
@@ -36,4 +39,7 @@ export default {
   close,
   location,
   locationPoint,
+  star,
+  delivery,
+  clock,
 };
