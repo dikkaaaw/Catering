@@ -16,6 +16,11 @@ import icons from '@/constants/icons';
 import Header from '@/components/common/Header';
 import Button from '@/components/common/Button';
 import LoginOptions from '@/components/common/LoginOptions';
+import {
+  useEmailValidation,
+  useFullNameValidation,
+  usePasswordValidation,
+} from '@/hooks/useValidation';
 
 type RootStackParamList = {
   Login: undefined;
@@ -23,14 +28,13 @@ type RootStackParamList = {
 };
 
 const RegisterScreen = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullNameError, setFullNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigation<NavigationProp<RootStackParamList>>();
+
+  // Custom hook for validation
+  const email = useEmailValidation();
+  const fullName = useFullNameValidation();
+  const password = usePasswordValidation();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -45,65 +49,12 @@ const RegisterScreen = () => {
   };
 
   const handleRegister = () => {
-    let hasError = false;
+    const isEmailValid = email.validate();
+    const isFullNameValid = fullName.validate();
+    const isPasswordValid = password.validate();
 
-    setFullNameError('');
-    setEmailError('');
-    setPasswordError('');
-
-    // Validate Full Name
-    if (!fullName.trim()) {
-      setFullNameError('Full name is required');
-      hasError = true;
-    } else if (fullName.trim().length < 2) {
-      setFullNameError('Full name must be at least 2 characters');
-      hasError = true;
-    }
-
-    // Validate Email
-    if (!email.trim()) {
-      setEmailError('Email is required');
-      hasError = true;
-    } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        setEmailError('Please enter a valid email address');
-        hasError = true;
-      }
-    }
-
-    // Validate Password
-    if (!password.trim()) {
-      setPasswordError('Password is required');
-      hasError = true;
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-      hasError = true;
-    }
-
-    if (!hasError) {
+    if (isEmailValid && isFullNameValid && isPasswordValid) {
       navigate.navigate('Tabs');
-    }
-  };
-
-  const handleFullNameChange = (text: string) => {
-    setFullName(text);
-    if (fullNameError) {
-      setFullNameError('');
-    }
-  };
-
-  const handleEmailChange = (text: string) => {
-    setEmail(text);
-    if (emailError) {
-      setEmailError('');
-    }
-  };
-
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-    if (passwordError) {
-      setPasswordError('');
     }
   };
 
@@ -126,22 +77,22 @@ const RegisterScreen = () => {
           <View className="mb-10 mt-2 flex flex-col gap-4">
             <View className="mb-1">
               <TextInput
-                className={`rounded-lg border ${fullNameError ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                className={`rounded-lg border ${fullName.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
                 style={{ height: 52 }}
                 placeholder="Full Name"
                 returnKeyType="next"
                 autoCapitalize="words"
-                value={fullName}
-                onChangeText={handleFullNameChange}
+                value={fullName.value}
+                onChangeText={fullName.setValue}
               />
-              {fullNameError && (
-                <Text className="ml-1 mt-1 text-sm text-red-400">{fullNameError}</Text>
+              {fullName.error && (
+                <Text className="ml-1 mt-1 text-sm text-red-400">{fullName.error}</Text>
               )}
             </View>
             <View className="mb-1">
               <View className="relative">
                 <TextInput
-                  className={`rounded-lg border ${emailError ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                  className={`rounded-lg border ${email.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
                   style={{ height: 52 }}
                   placeholder="Email Address"
                   inputMode="email"
@@ -149,8 +100,8 @@ const RegisterScreen = () => {
                   returnKeyType="next"
                   autoCapitalize="none"
                   autoComplete="email"
-                  value={email}
-                  onChangeText={handleEmailChange}
+                  value={email.value}
+                  onChangeText={email.setValue}
                 />
                 {email && (
                   <View
@@ -163,28 +114,28 @@ const RegisterScreen = () => {
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={!emailError ? icons.check : icons.phone}
+                      source={!email.error ? icons.check : icons.phone}
                       style={{
                         width: 22,
                         height: 22,
-                        tintColor: !emailError ? '#22C55E' : '#F87171',
+                        tintColor: !email.error ? '#22C55E' : '#F87171',
                       }}
                     />
                   </View>
                 )}
               </View>
-              {emailError && <Text className="ml-1 mt-1 text-sm text-red-400">{emailError}</Text>}
+              {email.error && <Text className="ml-1 mt-1 text-sm text-red-400">{email.error}</Text>}
             </View>
             <View className="mb-1">
               <View className="relative">
                 <TextInput
-                  className={`rounded-lg border ${passwordError ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                  className={`rounded-lg border ${password.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
                   style={{ height: 52 }}
                   placeholder="Password"
                   returnKeyType="done"
                   secureTextEntry={!showPassword}
-                  value={password}
-                  onChangeText={handlePasswordChange}
+                  value={password.value}
+                  onChangeText={password.setValue}
                 />
                 <TouchableOpacity
                   activeOpacity={0.9}
@@ -205,8 +156,8 @@ const RegisterScreen = () => {
                   />
                 </TouchableOpacity>
               </View>
-              {passwordError && (
-                <Text className="ml-1 mt-1 text-sm text-red-400">{passwordError}</Text>
+              {password.error && (
+                <Text className="ml-1 mt-1 text-sm text-red-400">{password.error}</Text>
               )}
             </View>
           </View>

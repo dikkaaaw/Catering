@@ -15,6 +15,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import icons from '@/constants/icons';
 import Button from '@/components/common/Button';
 import LoginOptions from '@/components/common/LoginOptions';
+import { useEmailValidation, usePasswordValidation } from '@/hooks/useValidation';
 
 type RootStackParamList = {
   Login: undefined;
@@ -24,69 +25,32 @@ type RootStackParamList = {
 };
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigate = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  // Custom hook for validation
+  const email = useEmailValidation();
+  const password = usePasswordValidation();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const handleLogin = () => {
-    let hasError = false;
+    const isEmailValid = email.validate();
+    const isPasswordValid = password.validate();
 
-    setEmailError('');
-    setPasswordError('');
-
-    // Validate email
-    if (!email.trim()) {
-      setEmailError('Email cannot be empty');
-      hasError = true;
-    } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        setEmailError('Please enter a valid email address');
-        hasError = true;
-      }
-    }
-
-    // Validate password
-    if (!password.trim()) {
-      setPasswordError('Password cannot be empty');
-      hasError = true;
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-      hasError = true;
-    }
-
-    if (!hasError) {
-      navigation.navigate('Tabs');
-    }
-  };
-
-  const handleEmailChange = (text: string) => {
-    setEmail(text);
-    if (emailError) {
-      setEmailError('');
-    }
-  };
-
-  const handlePasswordChange = (text: string) => {
-    setPassword(text);
-    if (passwordError) {
-      setPasswordError('');
+    if (isEmailValid && isPasswordValid) {
+      navigate.navigate('Tabs');
     }
   };
 
   const handleRegister = () => {
-    navigation.navigate('Register');
+    navigate.navigate('Register');
   };
 
   const handleForgotPassword = () => {
-    navigation.navigate('EnterEmail');
+    navigate.navigate('EnterEmail');
   };
 
   return (
@@ -116,7 +80,7 @@ const LoginScreen = () => {
             <View className="mb-2">
               <View className="relative">
                 <TextInput
-                  className={`rounded-lg border ${emailError ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                  className={`rounded-lg border ${email.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
                   style={{ height: 52 }}
                   placeholder="example@gmail.com"
                   inputMode="email"
@@ -124,8 +88,8 @@ const LoginScreen = () => {
                   returnKeyType="next"
                   autoCapitalize="none"
                   autoComplete="email"
-                  value={email}
-                  onChangeText={handleEmailChange}
+                  value={email.value}
+                  onChangeText={email.setValue}
                 />
                 {email && (
                   <View
@@ -138,28 +102,28 @@ const LoginScreen = () => {
                       alignItems: 'center',
                     }}>
                     <Image
-                      source={!emailError ? icons.check : icons.phone}
+                      source={!email.error ? icons.check : icons.phone}
                       style={{
                         width: 22,
                         height: 22,
-                        tintColor: !emailError ? '#22C55E' : '#F87171',
+                        tintColor: !email.error ? '#22C55E' : '#F87171',
                       }}
                     />
                   </View>
                 )}
               </View>
-              {emailError && <Text className="ml-1 mt-1 text-sm text-red-400">{emailError}</Text>}
+              {email.error && <Text className="ml-1 mt-1 text-sm text-red-400">{email.error}</Text>}
             </View>
             <View className="mb-2">
               <View className="relative">
                 <TextInput
-                  className={`rounded-lg border ${passwordError ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
+                  className={`rounded-lg border ${password.error ? 'border-red-400' : 'border-[#F3F2F2]'} bg-[#FBFBFB] px-5 pr-12 text-body`}
                   style={{ height: 52 }}
                   placeholder="password"
                   returnKeyType="done"
                   secureTextEntry={!showPassword}
-                  value={password}
-                  onChangeText={handlePasswordChange}
+                  value={password.value}
+                  onChangeText={password.setValue}
                 />
                 <TouchableOpacity
                   activeOpacity={0.9}
@@ -180,8 +144,8 @@ const LoginScreen = () => {
                   />
                 </TouchableOpacity>
               </View>
-              {passwordError && (
-                <Text className="ml-1 mt-1 text-sm text-red-400">{passwordError}</Text>
+              {password.error && (
+                <Text className="ml-1 mt-1 text-sm text-red-400">{password.error}</Text>
               )}
             </View>
           </View>
