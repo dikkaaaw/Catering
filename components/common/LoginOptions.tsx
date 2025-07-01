@@ -1,15 +1,18 @@
-import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import icons from '@/constants/icons';
 
 const LoginOptions = () => {
+  const navigate = useNavigation();
+
+  const handlePress = () => {};
   return (
     <View className="mt-8 flex flex-col gap-5">
       <TouchableOpacity
         activeOpacity={0.9}
         className="flex flex-row items-center justify-between gap-2 rounded-[8px] border border-[#F3F2F2] bg-[#395998] px-6 py-4"
-        onPress={() => {}}>
+        onPress={handlePress}>
         <Image source={icons.facebook} style={{ width: 28, height: 28 }} />
         <Text className="font-sf-medium text-[15px] uppercase text-white">
           Connect with Facebook
@@ -19,7 +22,7 @@ const LoginOptions = () => {
       <TouchableOpacity
         activeOpacity={0.9}
         className="flex flex-row items-center justify-between gap-2 rounded-[8px] border border-[#F3F2F2] bg-[#4285F4] px-6 py-4"
-        onPress={() => {}}>
+        onPress={handlePress}>
         <Image source={icons.google} style={{ width: 28, height: 28 }} />
         <Text className="font-sf-medium text-[15px] uppercase text-white">Connect with Google</Text>
         <View></View>
