@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
-  Pressable,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +24,8 @@ import {
 
 type RootStackParamList = {
   Login: undefined;
-  Tabs: undefined;
+  SelectLocation: undefined;
+  // Tabs: undefined;
 };
 
 const RegisterScreen = () => {
@@ -55,7 +55,7 @@ const RegisterScreen = () => {
     const isPasswordValid = password.validate();
 
     if (isEmailValid && isFullNameValid && isPasswordValid) {
-      navigate.navigate('Tabs');
+      navigate.navigate('SelectLocation');
     }
   };
 
