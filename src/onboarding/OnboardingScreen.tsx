@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import onboardingData from './onboardingData';
+import onboardingData from '../../data/onboardingData';
 import Button from '@/components/common/Button';
 
 const { width } = Dimensions.get('window');
